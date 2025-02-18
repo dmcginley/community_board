@@ -18,6 +18,8 @@ class HeroSettings(models.Model):
     button_one_link = models.CharField(max_length=255, blank=True, null=True)
     button_two_text = models.CharField(max_length=255, blank=True, null=True)
     button_two_link = models.CharField(max_length=255, blank=True, null=True)
+    h1_text = models.CharField(max_length=255, blank=True, null=True)
+    sub_text = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return "Hero Section Settings"

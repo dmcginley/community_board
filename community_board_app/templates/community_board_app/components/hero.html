@@ -1,7 +1,6 @@
-<section class="relative pt-[2em] 2xl:pt-[6em] mb-10 max-h-[800px] min-h-[400px] bg-cover bg-center" style="
-        {% if hero_settings.bg_color %} background-color: {{ hero_settings.bg_color|safe }}; {% endif %}
-        {% if hero_settings.hero_image %} background-image: url('{{ hero_settings.hero_image.url }}'); {% endif %}
-    ">
+<section class="relative pt-[2em] 2xl:pt-[6em] mb-10 max-h-[800px] min-h-[400px] bg-cover bg-center"
+style="{% if hero_settings.bg_color %} background-color: {{ hero_settings.bg_color|safe }}; {% endif %}
+        {% if hero_settings.hero_image %} background-image: url('{{ hero_settings.hero_image.url }}'); {% endif %}">
 
     <!-- Overlay (Fix height using h-full) -->
     {% if hero_settings.hero_image %}
@@ -9,14 +8,19 @@
     {% endif %}
 
     <div class="relative py-4 px-4 mx-auto  text-center lg:py-16 lg:px-12 z-10 text-gray-100">
+        {% if hero_settings.h1_text %}
 
         <h1
             class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-100 md:text-5xl lg:text-6xl dark:text-white">
-            We invest in the world’s potential</h1>
-        <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Here at
-            Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive
-            economic growth.</p>
-        <div class="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+            {{ hero_settings.h1_text }}</h1>
+            </h1>
+            {% endif %}
+            {% if hero_settings.sub_text %}
+        <p class="text-lg font-normal text-gray-300 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
+            {{ hero_settings.sub_text }}
+        </p>
+        {% endif %}
+        <div class="flex flex-col mt-12 mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             {% if hero_settings.button_one_text %}
             <a href="{{ hero_settings.button_one_link }}"
                 class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
