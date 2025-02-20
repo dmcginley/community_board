@@ -9,9 +9,17 @@
 
         <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <a href="{% url 'community_board_app:create_post' %}" type="button"
-                class="text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center :focus:ring-blue-800">
-                Create Postdark
+                class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center :focus:ring-blue-800">
+                Create Post
             </a>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'account_logout' %}" class="font-medium rounded-lg text-sm px-4 py-2 text-center">Logout</a>
+            {% else %}
+            <a href="{% url 'account_login' %}" class="font-medium rounded-lg text-sm px-4 py-2 text-center">Login</a>
+            {% endif %}
+
+
             <button data-collapse-toggle="navbar-cta" type="button"
                 class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
                 aria-controls="navbar-cta" aria-expanded="false">

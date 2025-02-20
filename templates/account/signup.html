@@ -1,0 +1,31 @@
+{% extends "allauth/layouts/entrance.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block entrance_content %}
+<div class="flex justify-center items-center min-h-[80vh]">
+    <div class="bg-white mt-4 p-8 rounded-lg shadow-lg w-[26em]">
+        <h2 class="text-2xl font-bold mb-6 text-center">Create an Account</h2>
+
+        <form method="post" action="{% url 'account_signup' %}" class="space-y-4">
+            {% csrf_token %}
+
+            {{ form|crispy }}
+
+            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Sign Up
+            </button>
+        </form>
+
+        <div class="mt-4 text-center">
+            <p>Already have an account?
+                <a href="{% url 'account_login' %}" class="text-blue-500 hover:underline">
+                    Log in here
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

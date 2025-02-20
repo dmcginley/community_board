@@ -2,17 +2,11 @@
 {% load tailwind_filters %}
 
 {% block content %}
-
-{% include 'community_board_app/components/hero.html' with post=post %}
 <!-- Display existing posts -->
+
 <div class="mt-10 px-2 max-w-2xl m-auto" id="post-feed" hx-get="{% url 'community_board_app:post_feed' %}"
-    hx-trigger="every 5s">
-    {% for post in posts %}
+    hx-trigger="every 5s" hx-target="#post-feed" hx-swap="innerHTML">
     {% include 'community_board_app/partials/post_partial.html' with post=post %}
-    {% endfor %}
-    {% for comment in comments %}
-    {% include 'community_board_app/partials/comment_partial.html' with comment=comment %}
-    {% endfor %}
 </div>
 
 {% endblock %}

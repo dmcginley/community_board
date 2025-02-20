@@ -9,6 +9,7 @@ urlpatterns = [
     path('profile/', include('profile_app.urls')),
     path('cms/', include('cms_app.urls')),
     path('', include('community_board_app.urls')),
+    path('accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:

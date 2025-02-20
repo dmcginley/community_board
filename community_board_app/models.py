@@ -21,6 +21,7 @@ class Post(models.Model):
 
     class Meta:
         verbose_name_plural = "posts"
+        ordering = ['-created_at'] 
 
     def save(self, *args, **kwargs):
         if not self.slug:  # Create slug only if it doesn't exist

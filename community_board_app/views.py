@@ -8,41 +8,50 @@ from django.views.generic import (
 )
 
 from django.db.models import Count
+from django.shortcuts import get_object_or_404
 from .models import Post, Comment
 from cms_app.models import HeroSettings
 from .forms import PostForm, CommentForm
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.template.loader import render_to_string
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 def index(request):
     return render(request, 'community_board_app/index.html')
 
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
 
 class PostFeedView(ListView):
     model = Post
     template_name = 'community_board_app/post_feed.html'
-    context_object_name = 'posts'  # Ensures we use `posts` in the template
-    ordering = ['-created_at']  # Orders posts by latest first
+    context_object_name = 'posts'
 
     def get_queryset(self):
-        return Post.objects.annotate(comment_count=Count('comments'))  # Annotate each post with comment count
+        return Post.objects.annotate(comment_count=Count('comments'))  # Ensure queryset includes comment count
 
     def get_context_data(self, **kwargs):
-        # Get the context from the parent class
         context = super().get_context_data(**kwargs)
 
-        # Get the HeroSettings instance
-        hero_settings = HeroSettings.objects.get(pk=1)
-
-        # Add `hero_settings` to the context
-        context['hero_settings'] = hero_settings
+        # Ensure HeroSettings exists and handle errors
+        context['hero_settings'] = get_object_or_404(HeroSettings, pk=1)
 
         return context
 
+    def get(self, request, *args, **kwargs):
+        if request.headers.get('Hx-Request'):  # Check if HTMX is making the request
+            posts = self.get_queryset()
+            html = render_to_string("community_board_app/partials/post_partial.html", {"posts": posts})
+            return HttpResponse(html)  # Return only the post content
 
-class CreatePostView(CreateView):
+        return super().get(request, *args, **kwargs)
+
+
+class CreatePostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'community_board_app/post_form.html'  # Template for the form
@@ -93,10 +102,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         if self.request.user == post.author:
             return True
         return False
-
-
-
-
+    
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Post
