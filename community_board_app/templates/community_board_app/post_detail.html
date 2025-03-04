@@ -8,7 +8,8 @@
         <h2 class="text-2xl pb-2">{{ post.title }}</h2>
         <p>{{ post.content }}</p>
         <div class="mt-2">
-            <small>{{ post.created_at }}</small>
+            <small class="text-gray-600">Author: <strong>{{ post.author.username }}</strong>
+                ({{ post.created_at|date:"F j, Y, g:ia" }})</small>
             <br>
             <p class="mt-2">{{ post.comment_count }} comments</p>
         </div>

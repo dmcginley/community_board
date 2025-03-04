@@ -8,6 +8,7 @@ class Profile(models.Model):
     location = models.CharField(max_length=100, blank=True)  # Optional location field
     birth_date = models.DateField(null=True, blank=True)  # Optional birth date field
     profile_picture = models.ImageField(upload_to='profile_pics/', default='profile_pics/profile_image.webp', blank=True, null=True)  # Optional profile picture
+    occupation = models.CharField(max_length=100, blank=True)  # Optional profection field
 
     def __str__(self):
         return self.user.username

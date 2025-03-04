@@ -9,9 +9,13 @@
 </head>
 
 <body>
+    {% if request.user.is_staff or request.user.is_superuser %}
+    {% include 'community_board_app/components/admin_navbar.html' with post=post %}
+    {% endif %}
+
     {% include 'community_board_app/components/navbar.html' %}
 
-    <main class="auth-container ">
+    <main class="auth-container">
         {% block content %}{% endblock %}
     </main>
 </body>

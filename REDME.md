@@ -1,53 +1,130 @@
-# Comunity Board
+# Deploy Django Python App on CloudPanel
 
-A brief description of theroject.
+```
+sudo apt update
+```
+To give the litedev user both read and write access 
 
-
-## Models
-
-### Model 1
-
-```python
-class Model1(models.Model):
-    field1 = models.CharField(max_length=100)
-    field2 = models.IntegerField()
+```
+ls -la
+```
+```
+sudo chown -R litedev:litedev /home/litedev/htdocs/litedev.dev
+```
+```
+sudo chmod -R u+rw /home/litedev/htdocs/litedev.dev
 ```
 
-### Model 2
+## Create a virtual environment:
 
-```python
-class Model2(models.Model):
-    field1 = models.DateField()
-    field2 = models.ForeignKey(Model1, on_delete=models.CASCADE)
+```
+python3 -m venv env
 ```
 
-## Installation
+## Activate the virtual environment
 
-1. Clone the repository:
-    ```sh
-    git clone <repository_url>
-    ```
-2. Install dependencies:
-    ```sh
-    pip install -r requirements.txt
-    ```
-3. Apply migrations:
-    ```sh
-    python manage.py migrate
-    ```
+```
+source env/bin/activate
+```
+```
+pip install -r requirements.txt
+```
+```
+pip install django gunicorn psycopg2-binary
+```
+```
+pip install mysqlclient
+```
 
-## Usage
+## Start project in current folder
+```
+django-admin startproject project .
+```
+## Change db to an sql db
+### DATABASES example
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'litedev-db',
+        'USER': 'litedev-db-user',
+        'PASSWORD': 'R5RC66qHNCT5d1IR9DBq',
+        'HOST': '127.0.0.1',  # Or specify the hostname of your MySQL server
+        'PORT': '3306',       # MySQL default port
+    }
+}
 
-1. Run the development server:
-    ```sh
-    python manage.py runserver
-    ```
-2. Open your browser and go to `http://127.0.0.1:8000/`.
+```
 
-## Contributing
 
-Please read `CONTRIBUTING.md` for details on our code of conduct, and the process for submitting pull requests.
+## Migrate your database
+```
+python3 manage.py makemigrations
+```
+```
+python3 manage.py migrate
+```
+## Let’s allow access to our port through the firewall.
+```
+ufw allow 8090
+```
+```
+deactivate
+```
 
-## License
 
-This project is licensed under the MIT License - see the `LICENSE` file for details.
+## Gunicorn socket
+
+Go to /etc/systemd/system in filezilla
+nano /etc/systemd/system/gunicorn.socket
+
+Copy/paste this code there then save the file:
+
+	[Unit]
+	Description=gunicorn socket
+
+	[Socket]
+	ListenStream=/run/gunicorn.sock
+
+	[Install]
+	WantedBy=sockets.target
+
+	Enable the Gunicorn socket
+
+	systemctl start gunicorn.socket
+	systemctl enable gunicorn.socket
+
+
+	systemctl start gunicorn-comunityboard.socket
+	systemctl enable gunicorn-comunityboard.socket
+
+
+
+
+To check the status of the Gunicorn socket, type the following command:
+```
+systemctl status gunicorn.socket
+```
+```
+systemctl status gunicorn-comunityboard.socket
+```
+
+### Restarting gunicorn-comunityboard
+```
+sudo systemctl daemon-reload
+```
+```
+sudo systemctl restart gunicorn-comunityboard
+```
+```
+sudo systemctl status gunicorn-comunityboard
+```
+
+Creating an admin user
+```
+python manage.py createsuperuser
+```
+
+
+
+

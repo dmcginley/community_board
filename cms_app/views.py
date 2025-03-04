@@ -17,6 +17,14 @@ class CMSDashboardView(TemplateView):
         return context
     
 
+
+def cms_overview_view(request: HttpRequest):
+    
+    if request.headers.get('HX-Request'):
+        return render(request, 'cms_app/partials/cms_overview.html')
+
+    return render(request, 'cms_app/cms_dashboard.html', {'current_view': 'cms_overview_view'})
+
 # CMS settings view
 def cms_view(request):
     navbar_settings, created_navbar = NavbarSettings.objects.get_or_create(pk=1)

@@ -9,13 +9,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'cms_app/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'profile_app/css/profile.css' %}">
     <script src="https://unpkg.com/htmx.org@1.9.3"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Comunity Board</title>
 </head>
 
-<body>
+<body class="text-gray-900 ">
+    {% if request.user.is_staff or request.user.is_superuser %}
     {% include 'community_board_app/components/admin_navbar.html' with post=post %}
+    {% endif %}
+
     {% include 'community_board_app/components/navbar.html' with post=post %}
     {% include 'community_board_app/components/hero.html' with post=post %}
 
@@ -23,6 +27,15 @@
         {% block content %}{% endblock content %}
     </div>
 
+
+
+    <!-- scripts -->
+    <script>
+        // Check if the element has been dismissed
+        if (localStorage.getItem('dropdown-cta-dismissed') === 'true') {
+            document.getElementById('dropdown-cta').style.display = 'none';
+        }
+    </script>
 </body>
 
 </html>

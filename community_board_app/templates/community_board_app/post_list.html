@@ -1,0 +1,22 @@
+{% extends 'community_board_app/base.html' %}
+{% load tailwind_filters %}
+
+{% block content %}
+<!-- Display existing posts -->
+<div class="pt-10 grid grid-cols-12 gap-6 max-w-screen-xl mx-auto">
+
+    <div class="col-span-12 lg:col-span-8" id="post-list" hx-get="{% url 'community_board_app:post_list' %}"
+        hx-trigger="every 5s" hx-target="#post-list" hx-swap="innerHTML">
+
+        {% for post in posts %}
+        {% include 'community_board_app/partials/post_partial.html' with post=post %}
+        {% empty %}
+        <p class="text-gray-500">No posts available.</p>
+        {% endfor %}
+    </div>
+    <!-- Sidebar with Categories -->
+    <aside class="col-span-12 lg:col-span-4 lg:pl-6">
+        {% include 'community_board_app/partials/category_partial.html' with categories=categories %}
+    </aside>
+</div>
+{% endblock %}

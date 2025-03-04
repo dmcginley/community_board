@@ -4,12 +4,12 @@ from django.http import JsonResponse
 from django.views.generic import (
     DetailView, ListView,
     CreateView, DeleteView,
-    UpdateView,
+    UpdateView, 
 )
+from .models import Post, Comment, Category
 
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
-from .models import Post, Comment
 from cms_app.models import HeroSettings
 from .forms import PostForm, CommentForm
 from django.shortcuts import redirect
@@ -26,9 +26,9 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 
 
-class PostFeedView(ListView):
+class PostListView(ListView):
     model = Post
-    template_name = 'community_board_app/post_feed.html'
+    template_name = 'community_board_app/post_list.html'
     context_object_name = 'posts'
 
     def get_queryset(self):
@@ -36,17 +36,16 @@ class PostFeedView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # Ensure HeroSettings exists and handle errors
+        context['posts'] = Post.objects.annotate(comment_count=Count('comments'))
+        context['categories'] = Category.objects.all()
         context['hero_settings'] = get_object_or_404(HeroSettings, pk=1)
-
         return context
 
     def get(self, request, *args, **kwargs):
-        if request.headers.get('Hx-Request'):  # Check if HTMX is making the request
+        if request.headers.get('Hx-Request'):  # HTMX request
             posts = self.get_queryset()
-            html = render_to_string("community_board_app/partials/post_partial.html", {"posts": posts})
-            return HttpResponse(html)  # Return only the post content
+            html = render_to_string("community_board_app/partials/post_partial.html", {"posts": posts})  # Pass as a list
+            return HttpResponse(html)
 
         return super().get(request, *args, **kwargs)
 
@@ -55,8 +54,12 @@ class CreatePostView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
     form_class = PostForm
     template_name = 'community_board_app/post_form.html'  # Template for the form
-    success_url = reverse_lazy('community_board_app:post_feed')  # Redirect after success
+    success_url = reverse_lazy('community_board_app:post_list')  # Redirect after success
 
+    def test_func(self):
+        user = self.request.user
+        return user.is_authenticated or user.is_staff or user.is_superuser  # Allow if logged in OR is staff/superuser
+    
     def form_valid(self, form):
         form.instance.author = self.request.user  # Assign the logged-in user
         self.object = form.save()
@@ -107,7 +110,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Post
     template_name = 'community_board_app/delete_post.html'
-    success_url = reverse_lazy('community_board_app:post_feed')
+    success_url = reverse_lazy('community_board_app:post_list')
 
     def test_func(self):
         post = self.get_object()
@@ -136,3 +139,20 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         comment = self.get_object()
         return self.request.user == comment.author or self.request.user.is_staff
+
+
+
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'community_board_app/category_list.html'  # Specify your template
+    context_object_name = 'categories'  # The variable name in the template
+    ordering = ['name']  # Optional: Order categories alphabetically
+
+
+class CategoryDetailView(DetailView):
+    model = Category
+    template_name = 'community_board_app/category_detail.html'
+    context_object_name = 'category'
+
+    def get_object(self):
+        return get_object_or_404(Category, slug=self.kwargs['slug'])

@@ -7,13 +7,17 @@
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
         <!-- Target for HTMX updates -->
         <div id="cms-content" hx-target="this" hx-swap="outerHTML">
-            {% if current_view == 'cms_view' %}
+
+            {% if current_view == 'cms_overview_view' %}
+            {% include 'cms_app/partials/cms_overview.html' %}
+            {% elif current_view == 'cms_view' %}
             {% include 'cms_app/partials/cms_site_settings.html' %}
             {% elif current_view == 'cms_users_view' %}
             {% include 'cms_app/partials/cms_users.html' %}
             {% elif current_view == 'cms_categories_view' %}
             {% include 'cms_app/partials/cms_categories.html' %}
             {% endif %}
+
         </div>
     </div>
 </div>

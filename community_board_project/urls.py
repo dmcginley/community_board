@@ -8,8 +8,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('profile/', include('profile_app.urls')),
     path('cms/', include('cms_app.urls')),
-    path('', include('community_board_app.urls')),
     path('accounts/', include('allauth.urls')),
+    path('', include('community_board_app.urls')),
 ]
 
 if settings.DEBUG:

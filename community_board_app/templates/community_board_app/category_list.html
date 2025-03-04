@@ -1,0 +1,21 @@
+{% extends 'community_board_app/base.html' %}
+
+
+{% block content %}
+<div class="pt-10 max-w-screen-xl mx-auto">
+    <h1 class="text-2xl font-bold mb-4">Categories</h1>
+    <ul class="list-disc pl-5">
+        {% for category in categories %}
+        <li class="text-lg">
+            <a href="{% url 'community_board_app:category_detail' category.slug %}"
+                class="text-blue-500 hover:underline">
+                {{ category.name }}
+            </a>
+            {% if category.description %}
+            <p class="text-gray-600 text-sm">{{ category.description }}</p>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+<h1 class="text-2xl font-bold mb-4">Categories</h1>
+<ul class="list-none">
+    {% for category in categories %}
+    <li class="text-lg mb-1">
+        <a href="{% url 'community_board_app:category_detail' category.slug %}" class="text-blue-500 hover:underline">
+            {{ category.name }}
+        </a>
+    </li>
+    {% endfor %}
+</ul>

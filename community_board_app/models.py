@@ -5,10 +5,16 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)  # Category name (e.g., "Technology", "Health")
+    slug = models.SlugField(unique=True, blank=True)  # URL-friendly identifier
     description = models.TextField(blank=True, null=True)  # Optional description
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
