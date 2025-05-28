@@ -1,6 +1,6 @@
 <button data-drawer-target="cta-button-sidebar" data-drawer-toggle="cta-button-sidebar"
    aria-controls="cta-button-sidebar" type="button"
-   class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+   class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
    <span class="sr-only">Open sidebar</span>
    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
       <path clip-rule="evenodd" fill-rule="evenodd"
@@ -12,13 +12,13 @@
 <aside id="cta-button-sidebar"
    class="fixed top-24 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
    aria-label="Sidebar">
-   <div class="h-full px-3 py-4 overflow-y-auto dark:bg-gray-800">
+   <div class="h-full px-3 py-4 overflow-y-auto">
       <ul class="space-y-2 font-medium">
 
          <li>
             <a hx-get="{% url 'cms_app:cms_overview_view' %}" hx-target="#cms-content" hx-swap="innerHTML"
                hx-trigger="click" hx-push-url="true"
-               class="cursor-pointer flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+               class="cursor-pointer flex items-center p-2 text-gray-800 rounded-lg hover:bg-gray-100 group">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-linecap="round" stroke-linejoin="round" width="28" height="28" stroke-width="1.75">
                   <path d="M10 3.2a9 9 0 1 0 10.8 10.8a1 1 0 0 0 -1 -1h-6.8a2 2 0 0 1 -2 -2v-7a.9 .9 0 0 0 -1 -.8">
@@ -29,8 +29,7 @@
             </a>
          </li>
          <li>
-            <a href="#"
-               class="line-through flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <a href="#" class="line-through flex items-center p-2 text-gray-800 rounded-lg hover:bg-gray-100 group">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-linecap="round" stroke-linejoin="round" width="28" height="28" stroke-width="1.75">
                   <path d="M10 21v-6.5a3.5 3.5 0 0 0 -7 0v6.5h18v-6a4 4 0 0 0 -4 -4h-10.5"></path>
@@ -39,13 +38,13 @@
                </svg>
                <span class="flex-1 ms-3 whitespace-nowrap">Inbox</span>
                <span
-                  class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+                  class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">3</span>
             </a>
          </li>
          <li>
             <a hx-get="{% url 'cms_app:cms_users_view' %}" hx-target="#cms-content" hx-swap="innerHTML"
                hx-trigger="click" hx-push-url="true"
-               class="cursor-pointer flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+               class="cursor-pointer flex items-center p-2 text-gray-800 rounded-lg  hover:bg-gray-100 group">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-linecap="round" stroke-linejoin="round" width="28" height="28" stroke-width="1.75">
                   <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
@@ -59,9 +58,24 @@
             </a>
          </li>
          <li>
+            <a hx-get="{% url 'cms_app:cms_categories_view' %}" hx-target="#cms-content" hx-swap="innerHTML"
+               hx-trigger="click" hx-push-url="true"
+               class="cursor-pointer flex items-center p-2 text-gray-800 rounded-lg hover:bg-gray-100 group">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-linecap="round" stroke-linejoin="round" width="28" height="28" stroke-width="1.75">
+                  <path d="M14 4h6v6h-6z"></path>
+                  <path d="M4 14h6v6h-6z"></path>
+                  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                  <path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+               </svg>
+               <span class="ms-3">Categories</span>
+            </a>
+
+         </li>
+         <li>
             <a hx-get="{% url 'cms_app:cms_view' %}" hx-target="#cms-content" hx-swap="innerHTML" hx-trigger="click"
                hx-push-url="{% url 'cms_app:cms_view' %}"
-               class="cursor-pointer flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+               class="cursor-pointer flex items-center p-2 text-gray-800 rounded-lg hover:bg-gray-100 group">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-linecap="round" stroke-linejoin="round" width="28" height="28" stroke-width="1.75">
                   <path d="M14 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
@@ -77,25 +91,11 @@
                <span class="ms-3">Site Settings</span>
             </a>
          </li>
-         <li>
-            <a hx-get="{% url 'cms_app:cms_categories_view' %}" hx-target="#cms-content" hx-swap="innerHTML"
-               hx-trigger="click" hx-push-url="true"
-               class="cursor-pointer flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                  stroke-linecap="round" stroke-linejoin="round" width="28" height="28" stroke-width="1.75">
-                  <path d="M14 4h6v6h-6z"></path>
-                  <path d="M4 14h6v6h-6z"></path>
-                  <path d="M17 17m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-                  <path d="M7 7m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
-               </svg>
-               <span class="ms-3">Categories</span>
-            </a>
-         </li>
          {% if user.is_authenticated %}
 
          <li>
             <a href="{% url 'account_logout' %}"
-               class="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+               class="flex items-center p-2 text-gray-800 rounded-lg  hover:bg-gray-100 group">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-linecap="round" stroke-linejoin="round" width="28" height="28" stroke-width="1.75">
                   <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2"></path>
@@ -107,8 +107,8 @@
          </li>
          {% else %}
          <li>
-            <a href="{% url 'account_loginj' %}"
-               class="flex items-center p-2 text-gray-800 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+            <a href="{% url 'account_login' %}"
+               class="flex items-center p-2 text-gray-800 rounded-lg  hover:bg-gray-100 group">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-linecap="round" stroke-linejoin="round" width="28" height="28" stroke-width="1.75">
                   <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2"></path>
@@ -119,12 +119,12 @@
             </a>
          </li>
          {% endif %}
-         <div id="dropdown-cta" class="p-4 mt-6 rounded-lg bg-blue-50 dark:bg-blue-900" role="alert">
+         <div id="dropdown-cta" class="p-4 mt-6 rounded-lg bg-blue-50 " role="alert">
             <div class="flex items-center mb-3">
                <span
-                  class="bg-orange-100 text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded-sm dark:bg-orange-200 dark:text-orange-900">Beta</span>
+                  class="bg-orange-100 text-orange-800 text-sm font-semibold me-2 px-2.5 py-0.5 rounded-sm ">Beta</span>
                <button type="button"
-                  class="ms-auto -mx-1.5 -my-1.5 bg-blue-50 inline-flex justify-center items-center w-6 h-6 text-blue-900 rounded-lg focus:ring-2 focus:ring-blue-400 p-1 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-400 dark:hover:bg-blue-800"
+                  class="ms-auto -mx-1.5 -my-1.5 bg-blue-50 inline-flex justify-center items-center w-6 h-6 text-blue-900 rounded-lg focus:ring-2 focus:ring-blue-400 p-1 hover:bg-blue-200 :bg-blue-900"
                   data-dismiss-target="#dropdown-cta" aria-label="Close"
                   hx-on:click="localStorage.setItem('dropdown-cta-dismissed', 'true'); this.closest('#dropdown-cta').remove()">
                   <span class="sr-only">Close</span>
@@ -135,7 +135,7 @@
                   </svg>
                </button>
             </div>
-            <p class="mb-3 text-sm text-blue-800 dark:text-blue-400">
+            <p class="mb-3 text-sm text-blue-800">
                Preview the new CMS dashboard navigation! This project is in beta—built with Django, featuring a template
                message board and a CMS for site administrators and users.
             </p>

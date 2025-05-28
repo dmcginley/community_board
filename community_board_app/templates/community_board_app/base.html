@@ -8,14 +8,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'cms_app/css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'profile_app/css/profile.css' %}">
     <script src="https://unpkg.com/htmx.org@1.9.3"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Comunity Board</title>
+    <link rel="stylesheet" href="{% static 'cms_app/css/style.css' %}">
+
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: {{ secondary_color }};
+            --button-color: {{ button_color }};
+            --button-text-color: {{ button_text_color }};
+            --button-hover-color: {{ button_hover_color }};
+            --button-hover-text-color: {{ button_hover_text_color }};
+        }
+    
+        .primary {
+            color: var(--primary-color) !important;
+        }
+    
+        .bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+    
+        .secondary {
+            color: var(--secondary-color) !important;
+        }
+    
+        .bg-secondary {
+            background-color: var(--secondary-color) !important;
+        }
+    
+        .btn-color {
+            background-color: var(--button-color) !important;
+            color: var(--button-text-color) !important;
+            transition: 120ms;
+        }
+    
+        .btn-color:hover {
+            background-color: var(--button-hover-color) !important;
+            color: var(--button-hover-text-color) !important;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'cms_app/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'profile_app/css/profile.css' %}">
 </head>
 
-<body class="text-gray-900 ">
+<body class="text-gray-900">
     {% if request.user.is_staff or request.user.is_superuser %}
     {% include 'community_board_app/components/admin_navbar.html' with post=post %}
     {% endif %}
@@ -35,7 +74,7 @@
         if (localStorage.getItem('dropdown-cta-dismissed') === 'true') {
             document.getElementById('dropdown-cta').style.display = 'none';
         }
-    </script>
+    </script>  
 </body>
 
 </html>

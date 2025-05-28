@@ -4,19 +4,19 @@
 <div class="container mx-auto py-8">
     <div class="grid grid-cols-4 lg:grid-cols-12 gap-6 px-4">
         <div class="col-span-8 lg:col-span-4">
-            <div class="bg-gray-50 dark:bg-gray-800 shadow rounded-lg p-6">
+            <div class="bg-gray-50 shadow rounded-lg p-6">
                 <div class="flex flex-col items-center">
                     <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{ profile.profile_picture.url }}"
                         alt="Bonnie image" />
-                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ user.username }}</h5>
-                    <span class="text-sm text-gray-500 dark:text-gray-200">{{ profile.occupation }}</span>
+                    <h5 class="mb-1 text-xl font-medium text-gray-900">{{ user.username }}</h5>
+                    <span class="text-sm text-gray-500">{{ profile.occupation }}</span>
 
                     <div class="flex mt-4 md:mt-6">
                         <a href="#"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Follow</a>
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white btn-color rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">Follow</a>
                         {% if user.is_authenticated %}
                         <a href="{% url 'profile_app:edit_profile' %}"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-700 bg-gray-100 dark:text-gray-100 dark:bg-gray-800 rounded-lg border border-gray-300 ml-2 hover:bg-gray-200 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:focus:ring-gray-600">Edit
+                            class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-700 bg-gray-100 rounded-lg border border-gray-300 ml-2 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-300">Edit
                             Profile</a>
                         {% endif %}
                     </div>
@@ -73,7 +73,7 @@
         </div>
         <div class="col-span-8 sm:col-span-8">
             <div
-                class="bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-50 shadow rounded-lg p-6 min-h-[300px]">
+                class="bg-gray-50 text-gray-700 shadow rounded-lg p-6 min-h-[300px]">
                 <h2 class="text-xl font-bold mb-4">About Me</h2>
                 <p class="">{{ profile.bio }}</p>
             </div>

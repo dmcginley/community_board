@@ -6,12 +6,12 @@
 <div class="container mx-auto py-8">
     <div class="grid grid-cols-4 lg:grid-cols-12 gap-6 px-4">
         <div class="col-span-8 lg:col-span-4">
-            <div class="bg-gray-50 dark:bg-gray-800 shadow rounded-lg p-6">
+            <div class="bg-gray-50 shadow rounded-lg p-6">
                 <div class="flex flex-col items-center">
                     <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src="{{ user.profile.profile_picture.url }}"
                         alt="Bonnie image" />
-                    <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{ user.username }}</h5>
-                    <span class="text-sm text-gray-500 dark:text-gray-200">{{ user.profile.occupation }}</span>
+                    <h5 class="mb-1 text-xl font-medium text-gray-900">{{ user.username }}</h5>
+                    <span class="text-sm text-gray-500">{{ user.profile.occupation }}</span>
 
                     <div class="flex mt-4 md:mt-6">
 
@@ -22,10 +22,10 @@
         </div>
         <div class="col-span-8 sm:col-span-8">
             <div
-                class="bg-gray-50 dark:bg-gray-800 text-gray-700 dark:text-gray-50 shadow rounded-lg p-6 min-h-[300px]">
+                class="bg-gray-50 text-gray-700 shadow rounded-lg p-6 min-h-[300px]">
                 <h2 class="text-2xl font-bold mb-4">Edit Profile</h2>
                 <p class="text-gray-700">
-                <form class="dark:text-gray-200" method="POST" enctype="multipart/form-data">
+                <form class="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ form|crispy }}
                     <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded">Save Changes</button>

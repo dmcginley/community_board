@@ -6,7 +6,7 @@
     <form method="post" action="{% url 'community_board_app:create_post' %}">
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Post</button>
+        <button type="submit" class="btn-color px-4 py-2 rounded">Create Post</button>
     </form>
 </div>
 {% endblock %}

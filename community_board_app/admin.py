@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Post, Comment
+from .models import Category, Post, Comment, SiteDescription
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -12,8 +12,15 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('category', 'created_at')
     search_fields = ('title', 'content')
 
+@admin.register(SiteDescription)
+class SiteDescriptionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'content', 'created_at', 'updated_at')
+
+
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('author', 'post', 'created_at')
     list_filter = ('created_at',)
     search_fields = ('user__username', 'post__title')  # Enable search by username and post title
+
+

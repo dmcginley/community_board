@@ -1,25 +1,22 @@
 {% extends 'community_board_app/base.html' %}
 
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">{{ category.name }}</h1>
 
-{% if category.description %}
-<p class="text-gray-600 mb-4">{{ category.description }}</p>
-{% endif %}
 
-<h2 class="text-xl font-semibold mt-6 mb-2">Posts in {{ category.name }}</h2>
+<div class="pt-10 grid grid-cols-12 gap-6 max-w-screen-xl mx-auto px-2">
+    <div class="col-span-12 lg:col-span-8">
+        <div class="border border-gray-200 rounded p-4 mb-6">
+            <div class="border-b border-gray-200 mb-4 pb-4">
+                <h2 class="text-2xl mb-1">{{ category.name }}</h2>
+                <p>{{ category.description }}</p>
+            </div>
+            {% include 'community_board_app/partials/post_partial.html' with post=post %}
 
-<ul class="list-disc pl-5">
-    {% for post in category.posts.all %}
-    <li class="mb-2">
-        <a href="{% url 'community_board_app:post_detail' post.slug %}" class="text-blue-500 hover:underline">
-            {{ post.title }}
-        </a>
-        <p class="text-gray-600 text-sm">By {{ post.author }} on {{ post.created_at|date:"F j, Y" }}</p>
-    </li>
-    {% empty %}
-    <p class="text-gray-500">No posts in this category yet.</p>
-    {% endfor %}
-</ul>
+        </div>
 
+    </div>
+    <aside class="col-span-12 lg:col-span-4 lg:pl-6">
+        {% include 'community_board_app/partials/category_partial.html' with categories=categories %}
+    </aside>
+</div>
 {% endblock %}

@@ -171,6 +171,14 @@ systemctl status gunicorn.socket
 systemctl status gunicorn-comunityboard.socket
 ```
 
+
+
+
+As root from /home/litedev-comunityboard/htdocs/comunityboard.litedev.dev start venv with:
+```
+source env/bin/activate
+
+```
 ### Restarting gunicorn-comunityboard
 ```
 sudo systemctl daemon-reload

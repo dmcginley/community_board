@@ -1,10 +1,35 @@
 {% extends 'community_board_app/base.html' %}
+{% load tailwind_filters %}
 
 {% block content %}
-<div class=" container mt-10">
 
-    <h1>Community Board</h1>
-    <p>Welcome to the Community Board!</p>
-    <p>Here you can post messages and view messages from other users.</p>
+<div class="pt-10 grid grid-cols-12 gap-6 max-w-screen-xl mx-auto px-2">
+    <div class="col-span-12 lg:col-span-8">
+        {% for category in categories %}
+        <div class="border border-gray-200 rounded p-4 mb-6 max-h-[500px] overflow-y-auto">
+            <div class="border-b border-gray-200 mb-4 pb-4">
+                <h2 class="text-2xl mb-1 primary">
+                    <a href="{% url 'community_board_app:category_detail' category.slug %}">{{category.name }}</a>
+                </h2>
+                <p>{{ category.description }}</p>
+            </div>
+            {% if category.posts.all %}
+            <div class="">
+                {{ post.title }}
+                {% include 'community_board_app/partials/post_partial.html' with post=post %}
+            </div>
+            {% else %}
+            <p class="primary">No posts yet in this category.</p>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p class="primary">No categories available.</p>
+        {% endfor %}
+    </div>
+
+    <aside class="col-span-12 lg:col-span-4 lg:pl-6">
+        {% include 'community_board_app/partials/site_description_partial.html' with site=site %}
+        {% include 'community_board_app/partials/category_partial.html' with categories=categories %}
+    </aside>
 </div>
 {% endblock %}

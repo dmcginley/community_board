@@ -5,10 +5,10 @@
 <div class="max-w-2xl p-6 mx-auto mb-4">
 
     <div class="post block" data-post-id="{{ post.id }}">
-        <h2 class="text-2xl pb-2">{{ post.title }}</h2>
+        <h2 class="text-2xl pb-2 primary">{{ post.title }}</h2>
         <p>{{ post.content }}</p>
         <div class="mt-2">
-            <small class="text-gray-600">Author: <strong>{{ post.author.username }}</strong>
+            <small class="secondary">Author: <strong>{{ post.author.username }}</strong>
                 ({{ post.created_at|date:"F j, Y, g:ia" }})</small>
             <br>
             <p class="mt-2">{{ post.comment_count }} comments</p>
@@ -16,7 +16,7 @@
 
         <div class="mt-6">
             <a href="{% url 'community_board_app:edit_post' slug=post.slug %}"
-                class="text-gray-700 hover:bg-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                class="text-gray-700 hover:bg-blue-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
                 Edit
                 <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"
                     fill="currentColor">
@@ -26,7 +26,7 @@
                 </svg>
             </a>
             <a href="{% url 'community_board_app:delete_post' slug=post.slug %}"
-                class="text-red-700  hover:bg-red-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                class="text-red-700  hover:bg-red-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center">
                 Delete
                 <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"
                     fill="currentColor">

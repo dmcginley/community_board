@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     'allauth',
     'allauth.account',
+    'user_visit',
+    # 'django_humanize',
 ]
 
 
@@ -69,13 +71,14 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'cms_app.context_processors.navbar_settings',
+                'cms_app.context_processors.website_settings',
+                'community_board_app.context_processors.categories',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'community_board_project.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -129,7 +132,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 
 LOGIN_REDIRECT_URL = '/'

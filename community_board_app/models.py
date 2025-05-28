@@ -17,6 +17,14 @@ class Category(models.Model):
         super().save(*args, **kwargs)
 
 class Post(models.Model):
+    DRAFT = 'draft'
+    PUBLISHED = 'published'
+
+    STATUS_CHOICES = [
+        (DRAFT, 'Draft'),
+        (PUBLISHED, 'Published'),
+    ]
+
     title = models.CharField(max_length=200)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -24,6 +32,7 @@ class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='posts')  # Added related_name
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name='posts')
     slug = models.SlugField(max_length=250, unique=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES,default=DRAFT)
 
     class Meta:
         verbose_name_plural = "posts"
@@ -65,3 +74,36 @@ class Like(models.Model):
 
     def __str__(self):
         return f'{self.user.username} likes "{self.post.title}"'
+
+
+class SiteDescription(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    num_posts = models.PositiveIntegerField(default=0)
+    num_members = models.PositiveIntegerField(default=0)
+
+
+    def save(self, *args, **kwargs):
+        """Ensure only one instance exists"""
+        if not SiteDescription.objects.exists():
+            super().save(*args, **kwargs)
+        else:
+            self.pk = SiteDescription.objects.first().pk
+            super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Site Description"
+        verbose_name_plural = "Site Description"
+
+    def num_posts(self):
+        """Returns the number of published posts."""
+        return Post.objects.filter(status=Post.PUBLISHED).count()
+
+    def num_users(self):
+        """Returns the total number of registered users."""
+        return User.objects.count()

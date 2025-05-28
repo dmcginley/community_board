@@ -1,9 +1,10 @@
 {% extends 'community_board_app/base.html' %}
 
 {% block content %}
+
 {% include 'cms_app/components/cms_sidenav.html' %}
 
-<div class="p-4 sm:ml-64">
+<div class="p-4 sm:ml-64 bg-gray-100 rounded-l-lg mb-8">
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
         <!-- Target for HTMX updates -->
         <div id="cms-content" hx-target="this" hx-swap="outerHTML">

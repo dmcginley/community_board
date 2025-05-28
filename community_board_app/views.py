@@ -6,10 +6,10 @@ from django.views.generic import (
     CreateView, DeleteView,
     UpdateView, 
 )
-from .models import Post, Comment, Category
+from .models import Post, Comment, Category, SiteDescription
 
-from django.db.models import Count
 from django.shortcuts import get_object_or_404
+from django.db.models import Count, Prefetch
 from cms_app.models import HeroSettings
 from .forms import PostForm, CommentForm
 from django.shortcuts import redirect
@@ -18,13 +18,37 @@ from django.template.loader import render_to_string
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-def index(request):
-    return render(request, 'community_board_app/index.html')
 
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import render_to_string
 
+
+def index(request):
+    return render(request, 'community_board_app/index.html')
+
+class IndexListView(ListView):
+    model = Category
+    template_name = 'community_board_app/index.html'
+    context_object_name = 'categories'
+
+    def get_queryset(self):
+        # Prefetch posts related to each category with status 'PUBLISHED' and annotated with comment count
+        return Category.objects.prefetch_related(
+            Prefetch(
+                'posts',
+                queryset=Post.objects.filter(status=Post.PUBLISHED).annotate(comment_count=Count('comments'))
+            )
+        ).all()
+
+    def get_context_data(self, **kwargs):
+        # Get the context data, which includes categories by default
+        context = super().get_context_data(**kwargs)
+        
+        # Optionally add hero settings if needed
+        context['hero_settings'] = HeroSettings.objects.first()  # Assuming only one object exists
+        context['site'] = SiteDescription.objects.first()  # Fetch the single instance
+        return context
 
 class PostListView(ListView):
     model = Post
@@ -156,3 +180,24 @@ class CategoryDetailView(DetailView):
 
     def get_object(self):
         return get_object_or_404(Category, slug=self.kwargs['slug'])
+
+
+
+
+class CategoryDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Category
+    template_name = 'community_board_app/delete_category.html'
+    success_url = reverse_lazy('community_board_app:category_list')  # Redirect to the category list after deletion
+
+    def test_func(self):
+        category = self.get_object()
+        # Allow only superusers or staff to delete categories
+        return self.request.user.is_superuser or self.request.user.is_staff
+    
+    def post(self, request, *args, **kwargs):
+        # Get the category object
+        category = self.get_object()
+        # Delete the category
+        category.delete()
+        # Redirect to the success URL (category list)
+        return redirect(self.success_url)

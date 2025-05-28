@@ -1,11 +1,13 @@
-{% for post in posts %}
+
+{% if category.posts.all %}
+{% for post in category.posts.all %}
 <a href="{% url 'community_board_app:post_detail' post.slug %}">
-    <div class="post block max-w-2xl p-6 mx-auto mb-4 bg-white dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-100 dark:border-gray-900 shadow-sm hover:bg-gray-100"
+    <div class="post block p-6 mx-auto mb-4 bg-white border border-gray-100 shadow-sm hover:bg-gray-100"
         data-post-id="{{ post.id }}">
-        <h2 class="text-2xl pb-2">{{ post.title }}</h2>
+        <h2 class="text-2xl pb-2 primary">{{ post.title }}</h2>
         <p>{{ post.content|truncatewords:20 }}</p>
         <div class="mt-2">
-            <small class="text-gray-600 dark:text-gray-300">Author: <strong>{{ post.author.username }}</strong>
+            <small class="secondary">Author: <strong>{{ post.author.username }}</strong>
                 ({{ post.created_at|date:"F j, Y, g:ia" }})</small>
         </div>
         <div class="mt-2 flex">
@@ -20,5 +22,7 @@
         </div>
     </div>
 </a>
-
 {% endfor %}
+{% else %}
+<p class="primary">No posts yet in this category.</p>
+{% endif %}
